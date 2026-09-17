@@ -1437,7 +1437,43 @@ try:
             )
         )
     )
+    north_locations = []
+    north_scores = []
+    north_hover = []
 
+    for feature in north_geojson["features"]:
+        geo_name = feature["properties"]["shapeName"]
+        data_name = north_name_map.get(geo_name)
+
+        if data_name is None:
+            continue
+
+        score = day0_score_dict.get(data_name)
+
+        if score is not None and pd.notna(score):
+            north_locations.append(geo_name)
+            north_scores.append(float(score))
+            north_hover.append(
+                f"{data_name}<br>"
+                f"Day 0 균형발전지수: {score:.1f}"
+            )
+
+    fig_map.add_trace(
+        go.Choroplethmap(
+            geojson=north_geojson,
+            locations=north_locations,
+            z=north_scores,
+            featureidkey="properties.shapeName",
+            zmin=0,
+            zmax=100,
+            colorscale="YlGnBu",
+            marker_opacity=0.75,
+            marker_line_width=1,
+            text=north_hover,
+            hovertemplate="%{text}<extra></extra>",
+            showscale=False
+        )
+    )
     fig_map.update_layout(
         map=dict(
             style="carto-positron",
