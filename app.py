@@ -1328,3 +1328,56 @@ st.caption(
     "두 시나리오의 연도별 남북 평균 균형발전 격차 변화를 비교합니다. "
     "값이 낮아질수록 본 시뮬레이션의 정의상 남북 평균격차가 감소한 것을 의미합니다."
 )
+# ============================================================
+# 지역별 균형발전 지도 - 1단계 테스트
+# ============================================================
+
+st.divider()
+st.header("통일한국 균형발전 시뮬레이션 지도")
+
+st.caption(
+    "현재는 지도 기능 테스트 단계로 대한민국 17개 광역지역 경계를 표시합니다. "
+    "이후 지역별 균형발전지수와 연도별 시뮬레이션 결과를 연결합니다."
+)
+
+import json
+
+try:
+    with open("korea_17_sido.geojson", "r", encoding="utf-8") as f:
+        korea_geojson = json.load(f)
+
+    st.success(
+        f"지도 경계 데이터 연결 성공: "
+        f"{len(korea_geojson['features'])}개 광역지역"
+    )
+
+    import plotly.graph_objects as go
+
+    fig_map = go.Figure(
+        go.Choroplethmapbox(
+            geojson=korea_geojson,
+            locations=[
+                feature["properties"]["sidonm"]
+                for feature in korea_geojson["features"]
+            ],
+            z=[1] * len(korea_geojson["features"]),
+            featureidkey="properties.sidonm",
+            colorscale="Blues",
+            showscale=False,
+            marker_opacity=0.6,
+            marker_line_width=1
+        )
+    )
+
+    fig_map.update_layout(
+        mapbox_style="carto-positron",
+        mapbox_zoom=5.5,
+        mapbox_center={"lat": 36.2, "lon": 127.8},
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        height=700
+    )
+
+    st.plotly_chart(fig_map, use_container_width=True)
+
+except Exception as e:
+    st.error(f"지도 데이터를 불러오는 중 오류가 발생했습니다: {e}")
