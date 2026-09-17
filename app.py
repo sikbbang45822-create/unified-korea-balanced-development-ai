@@ -1362,10 +1362,7 @@ try:
     )
 
     # GeoJSON 지역명 → 프로젝트 데이터 지역명
-   region_name_map = {
-    feature["properties"]["sidonm"]: feature["properties"]["sidonm"]
-    for feature in korea_geojson["features"]
-}
+  
     st.write("GeoJSON 지역명:", geo_names)
 
     # Day 0 균형발전지수 연결
@@ -1384,7 +1381,7 @@ try:
 
     for feature in korea_geojson["features"]:
         geo_name = feature["properties"]["sidonm"]
-        data_name = region_name_map.get(geo_name)
+        data_name = geo_name
 
         if data_name is None:
             continue
