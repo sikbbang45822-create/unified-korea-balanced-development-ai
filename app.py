@@ -95,7 +95,18 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 
 # 한글 폰트 설정
-plt.rcParams["font.family"] = "DejaVu Sans"
+import urllib.request
+
+font_path = "/tmp/NanumGothic.ttf"
+
+if not os.path.exists(font_path):
+    urllib.request.urlretrieve(
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothic/NanumGothic-Regular.ttf",
+        font_path
+    )
+
+fm.fontManager.addfont(font_path)
+plt.rcParams["font.family"] = "NanumGothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 st.set_page_config(
