@@ -1381,7 +1381,6 @@ try:
         "경기도": "경기",
         "강원특별자치도": "강원특별자치도"
     }
-    }
     # 실제 GeoJSON 지역명 확인
     geo_names = [
         feature["properties"]["sidonm"]
