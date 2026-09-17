@@ -1372,14 +1372,7 @@ try:
         "South Hwanghae": "황해남도",
         "South Pyongan": "평안남도"
     }
-st.write(
-    "북한 지역명 매칭:",
-    sum(
-        north_name_map.get(f["properties"]["shapeName"]) in df["지역"].values
-        for f in north_geojson["features"]
-    ),
-    "/ 11"
-)
+
     st.success(
         f"지도 경계 데이터 연결 성공: "
         f"{len(korea_geojson['features'])}개 광역지역"
