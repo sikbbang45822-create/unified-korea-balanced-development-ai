@@ -1362,7 +1362,7 @@ try:
     import plotly.graph_objects as go
 
     fig_map = go.Figure(
-        go.Choroplethmapbox(
+        go.Choroplethmap(
             geojson=korea_geojson,
             locations=[
                 feature["properties"]["sidonm"]
@@ -1378,9 +1378,11 @@ try:
     )
 
     fig_map.update_layout(
-        mapbox_style="carto-positron",
-        mapbox_zoom=5.5,
-        mapbox_center={"lat": 36.2, "lon": 127.8},
+        map=dict(
+            style="carto-positron",
+            zoom=5.5,
+            center={"lat": 36.2, "lon": 127.8}
+        ),
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         height=700
     )
