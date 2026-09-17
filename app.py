@@ -1356,6 +1356,9 @@ try:
     with open("korea_17_sido.geojson", "r", encoding="utf-8") as f:
         korea_geojson = json.load(f)
 
+    with open("geoBoundaries-PRK-ADM1_simplified.geojson", "r", encoding="utf-8") as f:
+        north_geojson = json.load(f)
+    
     st.success(
         f"지도 경계 데이터 연결 성공: "
         f"{len(korea_geojson['features'])}개 광역지역"
