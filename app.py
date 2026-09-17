@@ -1381,13 +1381,26 @@ try:
     # GeoJSON 지역명 → 프로젝트 데이터 지역명
   
 
-    # Day 0 균형발전지수 연결
-    day0_score_dict = dict(
-        zip(
-            df["지역"],
-            df["Day0_균형발전지수"]
-        )
+    # 지도에 표시할 시점 선택
+map_time = st.radio(
+    "지도 표시 시점",
+    ["Day 0 초기상태", f"{simulation_years}년 후 시뮬레이션"],
+    horizontal=True
+)
+
+if map_time == "Day 0 초기상태":
+    map_data = df
+    map_label = "Day 0"
+else:
+    map_data = sim_df
+    map_label = f"{simulation_years}년 후"
+
+day0_score_dict = dict(
+    zip(
+        map_data["지역"],
+        map_data["Day0_균형발전지수"]
     )
+)
 
     st.write("Excel 지역명:", df["지역"].tolist())
 
