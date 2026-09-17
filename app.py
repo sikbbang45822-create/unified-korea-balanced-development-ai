@@ -1154,73 +1154,73 @@ if st.button("📌 현재 결과를 시나리오 A로 저장"):
     )
 
     # --------------------------------------------------------
-    # 핵심 결과
-    # --------------------------------------------------------
+# 핵심 결과
+# --------------------------------------------------------
 
-    start = history_df.iloc[0]
-    end = history_df.iloc[-1]
+start = history_df.iloc[0]
+end = history_df.iloc[-1]
 
-    c1, c2, c3 = st.columns(3)
+c1, c2, c3 = st.columns(3)
 
-    c1, c2, c3 = st.columns(3)
+c1, c2, c3 = st.columns(3)
 
-    with c1:
-        st.markdown("**남북 평균격차**")
-        st.write(f"{end['남북 격차']:.2f}")
-        st.caption(f"변화: {end['남북 격차'] - start['남북 격차']:.2f}")
+with c1:
+    st.markdown("**남북 평균격차**")
+    st.write(f"{end['남북 격차']:.2f}")
+    st.caption(f"변화: {end['남북 격차'] - start['남북 격차']:.2f}")
 
-    with c2:
-        st.markdown("**북한 평균지수**")
-        st.write(f"{end['북한 평균']:.2f}")
-        st.caption(f"변화: {end['북한 평균'] - start['북한 평균']:.2f}")
+with c2:
+    st.markdown("**북한 평균지수**")
+    st.write(f"{end['북한 평균']:.2f}")
+    st.caption(f"변화: {end['북한 평균'] - start['북한 평균']:.2f}")
 
 
-    # --------------------------------------------------------
-    # 연도별 결과
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# 연도별 결과
+# --------------------------------------------------------
 
-    st.subheader("연도별 시뮬레이션 결과")
+st.subheader("연도별 시뮬레이션 결과")
 
-    display_history = history_df.copy()
+display_history = history_df.copy()
 
-    numeric_cols = display_history.columns[1:]
-    display_history[numeric_cols] = (
-        display_history[numeric_cols].round(3)
-    )
+numeric_cols = display_history.columns[1:]
+display_history[numeric_cols] = (
+    display_history[numeric_cols].round(3)
+)
 
-    st.table(display_history)
+st.table(display_history)
 
-    # 터널 환경에서도 비교적 안정적으로 표시되도록
-    # Streamlit 기본 line_chart 대신 matplotlib 사용
-    st.subheader("남북 평균 균형발전지수 변화")
+# 터널 환경에서도 비교적 안정적으로 표시되도록
+# Streamlit 기본 line_chart 대신 matplotlib 사용
+st.subheader("남북 평균 균형발전지수 변화")
 
-    import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots(figsize=(10, 5))
 
-    ax.plot(
-        history_df["연도"],
-        history_df["남한 평균"],
-        marker="o",
-        label="남한 평균"
-    )
+ax.plot(
+    history_df["연도"],
+    history_df["남한 평균"],
+    marker="o",
+    label="남한 평균"
+)
 
-    ax.plot(
-        history_df["연도"],
-        history_df["북한 평균"],
-        marker="o",
-        label="북한 평균"
-    )
+ax.plot(
+    history_df["연도"],
+    history_df["북한 평균"],
+    marker="o",
+    label="북한 평균"
+)
 
-    ax.set_xlabel("연도")
-    ax.set_ylabel("균형발전지수")
-    ax.set_title("정책 시나리오에 따른 10년 변화")
-    ax.legend()
-    ax.grid(alpha=0.3)
+ax.set_xlabel("연도")
+ax.set_ylabel("균형발전지수")
+ax.set_title("정책 시나리오에 따른 10년 변화")
+ax.legend()
+ax.grid(alpha=0.3)
 
-    st.pyplot(fig)
+st.pyplot(fig)
 
-    st.caption(
-        "투자효율과 시간효과 계수는 실제 정책효과의 추정값이 아니라 "
-        "프로토타입 작동을 위해 설정한 가정값입니다."
-    )
+st.caption(
+    "투자효율과 시간효과 계수는 실제 정책효과의 추정값이 아니라 "
+    "프로토타입 작동을 위해 설정한 가정값입니다."
+)
