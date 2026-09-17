@@ -1397,6 +1397,8 @@ try:
         )
     )
 
+    st.write("Excel 지역명:", df["지역"].tolist())
+
     map_locations = []
     map_scores = []
     map_hover = []
