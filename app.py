@@ -1297,37 +1297,45 @@ if "scenario_A" in st.session_state and "scenario_B" in st.session_state:
 # --------------------------------------------------
 # 시나리오 A / B 10년 변화 비교 그래프
 # --------------------------------------------------
+# --------------------------------------------------
+# 시나리오 A / B 10년 변화 비교 그래프
+# --------------------------------------------------
 
-st.subheader("시나리오 A / B 10년 변화 비교")
+if "scenario_A" in st.session_state and "scenario_B" in st.session_state:
 
-fig_compare, ax_compare = plt.subplots(figsize=(10, 5))
+    hist_A = st.session_state["scenario_A"]["history"]
+    hist_B = st.session_state["scenario_B"]["history"]
 
-ax_compare.plot(
-    hist_A["연도"],
-    hist_A["남북 격차"],
-    marker="o",
-    label="시나리오 A - 남북 격차"
-)
+    st.subheader("시나리오 A / B 10년 변화 비교")
 
-ax_compare.plot(
-    hist_B["연도"],
-    hist_B["남북 격차"],
-    marker="o",
-    label="시나리오 B - 남북 격차"
-)
+    fig_compare, ax_compare = plt.subplots(figsize=(10, 5))
 
-ax_compare.set_xlabel("연도")
-ax_compare.set_ylabel("남북 평균 균형발전 격차")
-ax_compare.set_title("시나리오 A / B에 따른 남북 격차 변화")
-ax_compare.legend()
-ax_compare.grid(alpha=0.3)
+    ax_compare.plot(
+        hist_A["연도"],
+        hist_A["남북 격차"],
+        marker="o",
+        label="시나리오 A - 남북 격차"
+    )
 
-st.pyplot(fig_compare)
+    ax_compare.plot(
+        hist_B["연도"],
+        hist_B["남북 격차"],
+        marker="o",
+        label="시나리오 B - 남북 격차"
+    )
 
-st.caption(
-    "두 시나리오의 연도별 남북 평균 균형발전 격차 변화를 비교합니다. "
-    "값이 낮아질수록 본 시뮬레이션의 정의상 남북 평균격차가 감소한 것을 의미합니다."
-)
+    ax_compare.set_xlabel("연도")
+    ax_compare.set_ylabel("남북 평균 균형발전 격차")
+    ax_compare.set_title("시나리오 A / B에 따른 남북 격차 변화")
+    ax_compare.legend()
+    ax_compare.grid(alpha=0.3)
+
+    st.pyplot(fig_compare)
+
+    st.caption(
+        "두 시나리오의 연도별 남북 평균 균형발전 격차 변화를 비교합니다. "
+        "값이 낮아질수록 본 시뮬레이션의 정의상 남북 평균격차가 감소한 것을 의미합니다."
+    )
 # ============================================================
 # 지역별 균형발전 지도 - 1단계 테스트
 # ============================================================
