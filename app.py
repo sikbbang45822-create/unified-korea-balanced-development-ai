@@ -94,12 +94,8 @@ def get_ai_policy_suggestion(current_gap, south_internal, north_internal, bottom
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 
-font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
-
-if font_path not in [f.fname for f in fm.fontManager.ttflist]:
-    fm.fontManager.addfont(font_path)
-
-plt.rcParams["font.family"] = "NanumGothic"
+# 한글 폰트 설정
+plt.rcParams["font.family"] = "DejaVu Sans"
 plt.rcParams["axes.unicode_minus"] = False
 
 st.set_page_config(
