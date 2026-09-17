@@ -1249,3 +1249,46 @@ if "scenario_A" in st.session_state:
             }
         }
         st.success("시나리오 B가 저장되었습니다.")
+# A / B 시나리오 비교 결과
+if "scenario_A" in st.session_state and "scenario_B" in st.session_state:
+
+    A = st.session_state["scenario_A"]
+    B = st.session_state["scenario_B"]
+
+    hist_A = A["history"]
+    hist_B = B["history"]
+
+    end_A = hist_A.iloc[-1]
+    end_B = hist_B.iloc[-1]
+
+    st.subheader("시나리오 A / B 비교 결과")
+
+    comparison_df = pd.DataFrame({
+        "지표": [
+            "남북 평균격차",
+            "남한 내부격차",
+            "북한 내부격차",
+            "하위 20% 지역 평균"
+        ],
+        "시나리오 A": [
+            end_A["남북 격차"],
+            end_A["남한 내부격차"],
+            end_A["북한 내부격차"],
+            end_A["하위20% 평균"]
+        ],
+        "시나리오 B": [
+            end_B["남북 격차"],
+            end_B["남한 내부격차"],
+            end_B["북한 내부격차"],
+            end_B["하위20% 평균"]
+        ]
+    })
+
+    comparison_df["A-B 차이"] = (
+        comparison_df["시나리오 A"] - comparison_df["시나리오 B"]
+    )
+
+    numeric_cols = ["시나리오 A", "시나리오 B", "A-B 차이"]
+    comparison_df[numeric_cols] = comparison_df[numeric_cols].round(3)
+
+    st.table(comparison_df)
