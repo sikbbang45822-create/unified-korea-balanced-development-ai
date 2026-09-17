@@ -1359,7 +1359,7 @@ try:
     with open("geoBoundaries-PRK-ADM1_simplified.geojson", "r", encoding="utf-8") as f:
         north_geojson = json.load(f)
 
-    st.write("북한 GeoJSON 속성 확인:", north_geojson["features"][0]["properties"])
+    st.write("북한 GeoJSON 지역명:", [feature["properties"]["shapeName"] for feature in north_geojson["features"]])
     
     st.success(
         f"지도 경계 데이터 연결 성공: "
