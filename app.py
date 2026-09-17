@@ -1359,86 +1359,86 @@ try:
         f"{len(korea_geojson['features'])}개 광역지역"
     )
 
-    import plotly.graph_objects as go
-
-    # GeoJSON 지역명과 데이터 지역명을 맞추기 위한 변환표
-  region_name_map = {
-    "서울": "서울",
-    "부산": "부산",
-    "대구": "대구",
-    "인천": "인천",
-    "광주": "광주",
-    "대전": "대전",
-    "울산": "울산",
-    "세종": "세종",
-    "경기": "경기",
-    "강원특별자치도": "강원특별자치도",
-    "충북": "충북",
-    "충남": "충남",
-    "전북특별자치도": "전북",
-    "전남": "전남",
-    "경북": "경북",
-    "경남": "경남",
-    "제주": "제주"
-}
-st.write("GeoJSON 지역명:", [f["properties"]["sidonm"] for f in korea_geojson["features"]])
-# 지역별 Day 0 균형발전지수 연결
-    day0_score_dict = dict(
-        zip(df["지역"], df["Day0_균형발전지수"])
-    )
-
-    map_locations = []
-    map_scores = []
-    map_hover = []
-
-for feature in korea_geojson["features"]:
-        geo_name = feature["properties"]["sidonm"]
-        data_name = region_name_map.get(geo_name)
-
-        score = day0_score_dict.get(data_name)
-
-        if score is not None and pd.notna(score):
-            map_locations.append(geo_name)
-            map_scores.append(float(score))
-            map_hover.append(
-                f"{data_name}<br>Day 0 균형발전지수: {score:.1f}"
+        import plotly.graph_objects as go
+        
+        # GeoJSON 지역명과 데이터 지역명을 맞추기 위한 변환표
+        region_name_map = {
+            "서울": "서울",
+            "부산": "부산",
+            "대구": "대구",
+            "인천": "인천",
+            "광주": "광주",
+            "대전": "대전",
+            "울산": "울산",
+            "세종": "세종",
+            "경기": "경기",
+            "강원특별자치도": "강원특별자치도",
+            "충북": "충북",
+            "충남": "충남",
+            "전북특별자치도": "전북",
+            "전남": "전남",
+            "경북": "경북",
+            "경남": "경남",
+            "제주": "제주"
+        }
+        st.write("GeoJSON 지역명:", [f["properties"]["sidonm"] for f in korea_geojson["features"]])
+        # 지역별 Day 0 균형발전지수 연결
+            day0_score_dict = dict(
+                zip(df["지역"], df["Day0_균형발전지수"])
             )
-
-fig_map = go.Figure(
-        go.Choroplethmap(
-            geojson=korea_geojson,
-            locations=map_locations,
-            z=map_scores,
-            featureidkey="properties.sidonm",
-
-            zmin=0,
-            zmax=100,
-
-            colorscale="YlGnBu",
-
-            marker_opacity=0.75,
-            marker_line_width=1,
-
-            text=map_hover,
-            hovertemplate="%{text}<extra></extra>",
-
-            colorbar=dict(
-                title="Day 0<br>균형발전지수"
+        
+            map_locations = []
+            map_scores = []
+            map_hover = []
+        
+        for feature in korea_geojson["features"]:
+                geo_name = feature["properties"]["sidonm"]
+                data_name = region_name_map.get(geo_name)
+        
+                score = day0_score_dict.get(data_name)
+        
+                if score is not None and pd.notna(score):
+                    map_locations.append(geo_name)
+                    map_scores.append(float(score))
+                    map_hover.append(
+                        f"{data_name}<br>Day 0 균형발전지수: {score:.1f}"
+                    )
+        
+        fig_map = go.Figure(
+                go.Choroplethmap(
+                    geojson=korea_geojson,
+                    locations=map_locations,
+                    z=map_scores,
+                    featureidkey="properties.sidonm",
+        
+                    zmin=0,
+                    zmax=100,
+        
+                    colorscale="YlGnBu",
+        
+                    marker_opacity=0.75,
+                    marker_line_width=1,
+        
+                    text=map_hover,
+                    hovertemplate="%{text}<extra></extra>",
+        
+                    colorbar=dict(
+                        title="Day 0<br>균형발전지수"
+                    )
+                )
             )
-        )
-    )
-
-fig_map.update_layout(
-        map=dict(
-            style="carto-positron",
-            zoom=5.5,
-            center={"lat": 36.2, "lon": 127.8}
-        ),
-        margin={"r": 0, "t": 20, "l": 0, "b": 0},
-        height=700
-    )
-
-st.plotly_chart(fig_map, use_container_width=True)
+        
+        fig_map.update_layout(
+                map=dict(
+                    style="carto-positron",
+                    zoom=5.5,
+                    center={"lat": 36.2, "lon": 127.8}
+                ),
+                margin={"r": 0, "t": 20, "l": 0, "b": 0},
+                height=700
+            )
+        
+        st.plotly_chart(fig_map, use_container_width=True)
 
 except Exception as e:
     st.error(f"지도 데이터를 불러오는 중 오류가 발생했습니다: {e}")
