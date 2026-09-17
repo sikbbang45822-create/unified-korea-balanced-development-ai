@@ -12,7 +12,7 @@ import os
 import json
 from openai import OpenAI
 
-def get_ai_policy_suggestion(current_gap, south_internal, north_internal, bottom20):
+def get_ai_policy_suggestion(current_gap, south_internal, north_internal, bottom20, user_scenario=""):
 
     api_key = os.getenv("OPENAI_API_KEY")
 
@@ -29,7 +29,10 @@ def get_ai_policy_suggestion(current_gap, south_internal, north_internal, bottom
 - 남한 내부 지역격차: {south_internal:.3f}
 - 북한 내부 지역격차: {north_internal:.3f}
 - 하위 20% 지역 평균 균형발전지수: {bottom20:.3f}
+사용자가 설정한 정책 시나리오:
+{user_scenario if user_scenario.strip() else "별도의 시나리오가 입력되지 않았습니다. 현재 지역격차 지표를 중심으로 정책을 설계하십시오."}
 
+위 시나리오의 정책목표와 우선순위를 고려하되, 현재 Day 0의 지역격차 지표도 함께 고려하십시오.
 연간 가상 정책재원을 다음 두 단계로 배분하십시오.
 
 1. 남한지역 / 북한지역 투자 비중
@@ -745,7 +748,19 @@ st.write(
     "현재 Day 0의 지역격차를 바탕으로 생성형 AI가 "
     "남북한 재원 및 5개 정책 분야의 투자비중을 제안합니다."
 )
+user_scenario = st.text_area(
+    "정책 시나리오 입력",
+    placeholder=(
+        "예: 통일 초기 북한 지역의 전력·상하수도 등 기초생활 인프라 복구를 "
+        "우선하면서 남북 간 교통망 연결도 함께 추진하고 싶다."
+    ),
+    height=120
+)
 
+st.caption(
+    "원하는 통일·개발 상황이나 정책목표를 자유롭게 입력하면 "
+    "생성형 AI가 해당 시나리오를 고려해 투자정책을 제안합니다."
+)
 if st.button("🤖 AI 정책 제안 받기"):
 
     try:
@@ -777,7 +792,8 @@ if st.button("🤖 AI 정책 제안 받기"):
                 current_gap=ai_current_gap,
                 south_internal=ai_south_internal,
                 north_internal=ai_north_internal,
-                bottom20=ai_bottom20
+                bottom20=ai_bottom20,
+                user_scenario=user_scenario
             )
 
         st.session_state["ai_policy"] = ai_policy
