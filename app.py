@@ -1359,19 +1359,19 @@ try:
     with open("geoBoundaries-PRK-ADM1_simplified.geojson", "r", encoding="utf-8") as f:
         north_geojson = json.load(f)
 
-north_name_map = {
-    "Jagang": "자강도",
-    "Kangwon": "강원도(북한)",
-    "Nampo": "남포특별시",
-    "North Hamgyong": "함경북도",
-    "North Hwanghae": "황해북도",
-    "North Pyongan": "평안북도",
-    "Pyongyang": "평양직할시",
-    "Ryanggang": "양강도",
-    "South Hamgyong": "함경남도",
-    "South Hwanghae": "황해남도",
-    "South Pyongan": "평안남도"
-}
+    north_name_map = {
+        "Jagang": "자강도",
+        "Kangwon": "강원도(북한)",
+        "Nampo": "남포특별시",
+        "North Hamgyong": "함경북도",
+        "North Hwanghae": "황해북도",
+        "North Pyongan": "평안북도",
+        "Pyongyang": "평양직할시",
+        "Ryanggang": "양강도",
+        "South Hamgyong": "함경남도",
+        "South Hwanghae": "황해남도",
+        "South Pyongan": "평안남도"
+    }
 st.write(
     "북한 지역명 매칭:",
     sum(
