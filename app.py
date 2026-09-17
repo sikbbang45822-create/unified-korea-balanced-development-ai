@@ -1224,3 +1224,28 @@ st.caption(
     "투자효율과 시간효과 계수는 실제 정책효과의 추정값이 아니라 "
     "프로토타입 작동을 위해 설정한 가정값입니다."
 )
+# ============================================================
+# 시나리오 A / B 비교 기능
+# ============================================================
+
+st.divider()
+st.header("정책 시나리오 비교")
+
+if "scenario_A" in st.session_state:
+    st.success("시나리오 A가 저장되어 있습니다.")
+
+    if st.button("현재 결과를 시나리오 B로 저장"):
+        st.session_state["scenario_B"] = {
+            "scenario_text": user_scenario,
+            "history": history_df.copy(),
+            "south_budget": south_budget_ratio,
+            "north_budget": north_budget_ratio,
+            "sector_weights": {
+                "경제·산업": economy_ratio,
+                "교통·물류": transport_ratio,
+                "의료·보건": health_ratio,
+                "교육": education_ratio,
+                "생활인프라": living_ratio
+            }
+        }
+        st.success("시나리오 B가 저장되었습니다.")
