@@ -1133,7 +1133,22 @@ if sector_total == 100:
         record_year(year, sim_df)
 
     history_df = pd.DataFrame(history)
-
+# 현재 시나리오의 10년 결과를 저장
+if st.button("📌 현재 결과를 시나리오 A로 저장"):
+    st.session_state["scenario_A"] = {
+        "scenario_text": user_scenario,
+        "history": history_df.copy(),
+"south_budget": south_budget_ratio,
+"north_budget": north_budget_ratio,
+"sector_weights": {
+    "경제·산업": economy_ratio,
+    "교통·물류": transport_ratio,
+    "의료·보건": health_ratio,
+    "교육": education_ratio,
+    "생활인프라": living_ratio
+}
+}
+    st.success("시나리오 A가 저장되었습니다.")
     st.success(
         f"{simulation_years}년 정책 시뮬레이션 계산이 완료되었습니다."
     )
