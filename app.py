@@ -1363,7 +1363,6 @@ try:
 
     # GeoJSON 지역명 → 프로젝트 데이터 지역명
   
-    st.write("GeoJSON 지역명:", geo_names)
 
     # Day 0 균형발전지수 연결
     day0_score_dict = dict(
